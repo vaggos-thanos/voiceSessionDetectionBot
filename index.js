@@ -7,7 +7,6 @@ const client = new Client({
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.MessageContent,
-        // GatewayIntentBits.GuildBans,
         GatewayIntentBits.GuildMessages,
     ]
 });
@@ -17,44 +16,48 @@ client.on('ready', () => {
 });
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
-    if(newState.mute) return;
-    if(newState.selfDeaf) return;
-    if(newState.selfMute) return;
-    if(newState.selfVideo) return;
-    if(newState.serverDeaf) return;
-    if(newState.serverMute) return;
-
-    const guild =   newState.guild
-    const oldMember = oldState
-    const newMember = newState
-    const member = guild.members.cache.get(newMember.id)
-
-    const friends = ['469897864961851422', '588416409407848457', '630780651238326272']
+    try {
+        if(newState.mute) return;
+        if(newState.selfDeaf) return;
+        if(newState.selfMute) return;
+        if(newState.selfVideo) return;
+        if(newState.serverDeaf) return;
+        if(newState.serverMute) return;
+    
+        const guild =   newState.guild
+        const oldMember = oldState
+        const newMember = newState
+        const member = guild.members.cache.get(newMember.id)
+    
+        const friends = ['469897864961851422', '588416409407848457', '630780651238326272']
+        
+        
+        if (newMember.channelId === null) {
+            //leave
     
     
-    if (newMember.channelId === null) {
-        //leave
-
-
-    } else if (oldMember.channelId === null) {
-        //join
-        const embed = new EmbedBuilder()
-            .setTitle('Mpes CALLLLLLL')
-            .setDescription(`**${member.user.username}** is calling you on **${newMember.channel}**`)
-            .setColor("#00ffee")
-            .setTimestamp()
-            .setFooter({text: "Mpes CALLLLLLL"})
-
-        for(const friend of friends) {
-            if(member.id != friend) {
-                const friendMember = guild.members.cache.get(friend)
-                friendMember.send({embeds: [embed]})
+        } else if (oldMember.channelId === null) {
+            //join
+            const embed = new EmbedBuilder()
+                .setTitle('Mpes CALLLLLLL')
+                .setDescription(`**${member.user.username}** is calling you on **${newMember.channel}**`)
+                .setColor("#00ffee")
+                .setTimestamp()
+                .setFooter({text: "Mpes CALLLLLLL"})
+    
+            for(const friend of friends) {
+                if(member.id != friend) {
+                    const friendMember = guild.members.cache.get(friend)
+                    friendMember.send({embeds: [embed]})
+                }
             }
+    
+        } else if (oldMember.channelId !== newMember.channelId) {
+            //switch
+    
         }
-
-    } else if (oldMember.channelId !== newMember.channelId) {
-        //switch
-
+    } catch (error) {
+        console.log(error)
     }
     
 });
