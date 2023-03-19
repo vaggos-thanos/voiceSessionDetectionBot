@@ -9,7 +9,7 @@ module.exports = class onVoiceChange extends Event {
 
     async run(oldMember, newMember) {
         try {
-
+            this.client.voiceService.checkVoice(oldMember, newMember);
         } catch (error) {
             this.client.functions.log(error, error)
         }

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/bot.js",
-    "dev": "nodemon ./src/bot.js"
+    "dev": "nodemon ./src/bot.js",
+    "debug": "nodemon --inspect ./src/bot.js",
+    "deploy": "node ./src/DeploySlashCommands.js"
   },
   "repository": {
     "type": "git",

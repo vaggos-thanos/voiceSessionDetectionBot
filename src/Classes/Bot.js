@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const functions = require("./functions");
 const prompt = require('prompt-sync')();
-
+const VoiceService = require("../services/voice.service");
 module.exports = class Bot extends Client {
     constructor(args) {
         super(args);
@@ -12,6 +12,7 @@ module.exports = class Bot extends Client {
         this.subCommands = new Collection();
         this.events = new Collection();
         this.functions = new functions();
+        this.voiceService = new VoiceService(this);
     }
 
     async InitCommands(dir) {
@@ -126,6 +127,7 @@ module.exports = class Bot extends Client {
     async Start(token) {
         await this.InitCommands('../commands');
         await this.InitEvents('../listeners');
+        this.voiceService.init();
         await super.login(token);
     }
 }

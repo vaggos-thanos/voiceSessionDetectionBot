@@ -10,7 +10,6 @@ module.exports = class onCommand extends Event {
     async run(interaction) {
         try {
             if (!interaction.isCommand()) return;
-            const guildConfig = await this.client.GuildConfigs.get(interaction.guildId)
             let SubCommandName = null;
             if(interaction.options._subcommand != null) {
                 this.client.subCommands.get(interaction.commandName).subCommands.forEach(subCommand => {
