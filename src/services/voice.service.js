@@ -43,10 +43,11 @@ module.exports = class voiceService {
         const member = guild.members.cache.get(newMember.id)
     
         const friends = this.users.map(user => user.id)
-        const user_in_channel = newMember.channel.members.map(member => member.id)
                 
         if (oldMember.channelId === null) {
             //join
+            const user_in_channel = newMember.channel.members.map(member => member.id)
+
             const embed = new EmbedBuilder()
                 .setTitle('Mpes CALLLLLLL')
                 .setDescription(`**${member.user.username}** is calling you on **${newMember.channel}**`)
